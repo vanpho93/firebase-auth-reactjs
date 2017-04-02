@@ -1,17 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { HashRouter, Route } from 'react-router-dom';
 import firebase from 'firebase';
+import { Provider } from 'react-redux';
 
+import App from './component/App';
 import firebaseRef from './firebase';
 import './api/foundationSetup';
-import Login from './component/Login';
-import Quote from './component/Quote';
-import TestAuth from './component/TestAuth';
 import store from './redux';
 
 //Listen to auth changing
+
 firebase.auth().onAuthStateChanged(user => {
     store.dispatch({ type: 'SET_USER', user });
     if (user) {
@@ -20,28 +18,17 @@ firebase.auth().onAuthStateChanged(user => {
         .then(res => {
             store.dispatch({ type: 'SET_QUOTE', quote: res.val().quote });
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        .then(() => store.dispatch({ type: 'INIT_FINISHED' }));
 
         uidRef.on('child_changed', 
             snapshot => store.dispatch({ type: 'SET_QUOTE', quote: snapshot.val() }));
     }
 });
 
-//Listen to quote changing
-
-const App = () => (
-    <Provider store={store}>
-        <HashRouter>
-            <div>
-                <TestAuth />
-                <Route exact path="/" component={Login} />
-                <Route path="/quote" component={Quote} />
-            </div>
-        </HashRouter>
-    </Provider>
-);
-
 ReactDOM.render(
-    <App />,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById('root') // eslint-disable-line
 );
