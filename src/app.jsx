@@ -8,8 +8,8 @@ import firebaseRef from './firebase';
 import './api/foundationSetup';
 import Login from './component/Login';
 import Quote from './component/Quote';
+import TestAuth from './component/TestAuth';
 import store from './redux';
-
 
 //Listen to auth changing
 firebase.auth().onAuthStateChanged(user => {
@@ -23,7 +23,7 @@ firebase.auth().onAuthStateChanged(user => {
         .catch(err => console.log(err));
 
         uidRef.on('child_changed', 
-            snapshot => store.dispatch({ type: 'SET_QUOTE', quote: snapshot.val().qoute }));
+            snapshot => store.dispatch({ type: 'SET_QUOTE', quote: snapshot.val() }));
     }
 });
 
@@ -33,6 +33,7 @@ const App = () => (
     <Provider store={store}>
         <HashRouter>
             <div>
+                <TestAuth />
                 <Route exact path="/" component={Login} />
                 <Route path="/quote" component={Quote} />
             </div>
