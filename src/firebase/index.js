@@ -10,6 +10,6 @@ const config = {
 };
 firebase.initializeApp(config);
 
-// export const githubProvider = new firebase.auth.GithubAuthProvider();
+export const githubProvider = new firebase.auth.GithubAuthProvider();
 const firebaseRef = firebase.database().ref();
 export default firebaseRef;
