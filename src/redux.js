@@ -26,7 +26,7 @@ const reducer = redux.combineReducers({
 });
 
 const store = redux.createStore(reducer, redux.compose(
-    window.devToolsExtension ? window.devToolsExtension() : f => f // eslint-disable-line
+    window.devToolsExtension ? window.devToolsExtension() : f => f
 ));
 
 export default store;
