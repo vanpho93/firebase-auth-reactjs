@@ -11,5 +11,9 @@ const config = {
 firebase.initializeApp(config);
 
 export const githubProvider = new firebase.auth.GithubAuthProvider();
+export const facebookProvider = new firebase.auth.FacebookAuthProvider();
+
 const firebaseRef = firebase.database().ref();
+
+firebaseRef.on('value', snapshot => console.log(snapshot.val()));
 export default firebaseRef;

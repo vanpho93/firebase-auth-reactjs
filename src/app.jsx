@@ -9,6 +9,8 @@ import './api/foundationSetup';
 import store from './redux';
 
 //Listen to auth changing
+console.log('USER:', firebase.User);
+console.log('USER INFO', firebase.UserInfo);
 
 firebase.auth().onAuthStateChanged(user => {
     store.dispatch({ type: 'SET_USER', user });
@@ -23,6 +25,8 @@ firebase.auth().onAuthStateChanged(user => {
 
         uidRef.on('child_changed', 
             snapshot => store.dispatch({ type: 'SET_QUOTE', quote: snapshot.val() }));
+    } else {
+        store.dispatch({ type: 'INIT_FINISHED' });
     }
 });
 
@@ -32,3 +36,5 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root') // eslint-disable-line
 );
+
+//eslint-disable-line npm install firebase
